@@ -190,6 +190,42 @@ namespace MVC_Store.Areas.Admin.Controllers
             //Возврат модули в представление
             return View(model);
         }
+
+        // GET: Admin/Pages/DeletePage/id
+        public ActionResult DeletePage(int id)
+        {
+            using (Db db =  new Db())
+            {
+                //получаем страyицу
+                PagesDTO dto = db.Pages.Find(id);
+                //удаляем страницу
+                db.Pages.Remove(dto);
+                //сохраняемизменн в базе
+                db.SaveChanges();
+            }
+            TempData["SM"] = "You have deleted a page";
+            return RedirectToAction("Index");
+        }
+        
+        [HttpGet]
+        public void ReorderPages(int [] id)
+        {
+            using (Db db = new Db())
+            {
+                int count = 1;
+                PagesDTO dto;
+                foreach(var pageId in id)
+                {
+                    dto = db.Pages.Find(pageId);
+                    dto.Sorting = count;
+                    db.SaveChanges();
+                    count++;
+                }
+               
+
+            }
+        }
+
     }
 
 }

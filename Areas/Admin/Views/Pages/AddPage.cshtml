@@ -6,18 +6,19 @@
 
 <h2>Add New Page</h2>
 @if (TempData["SM"] != null)
- {
-    <div class="alert alert-success" >
+{
+    <div class="alert alert-success">
         @TempData["SM"]
     </div>
 }
 
-@using (Html.BeginForm()) 
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-      
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -39,7 +40,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Body, new { @class = "form-control" } )
+                @Html.TextAreaFor(model => model.Body, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
             </div>
         </div>
