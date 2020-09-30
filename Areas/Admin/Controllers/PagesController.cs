@@ -226,6 +226,39 @@ namespace MVC_Store.Areas.Admin.Controllers
             }
         }
 
+        // GET: Admin/Pages/EditSidebar
+        [HttpGet]
+        public ActionResult EditSidebar()
+        {
+            SidebarVM model;
+            using (Db db = new Db())
+            {
+                SidebarDTO dto = db.Sidebars.Find();// исправить!!!
+
+                model = new SidebarVM(dto);
+
+            }
+            return View(model);
+        }
+
+        // POST: Admin/Pages/EditSidebar
+        [HttpPost]
+        public ActionResult EditSidebar(SidebarVM model)
+        {
+            
+            using (Db db = new Db())
+            {   //получаем данные из DTO
+                SidebarDTO dto = db.Sidebars.Find(1);
+                //присваиваем данные в body
+                dto.Body = model.Body;
+                //сохраняем
+                db.SaveChanges();
+            }
+            // сообщение в TempData
+            TempData["SM"] = "You have edited Sidebar!";
+            //переадресация пользователя
+            return RedirectToAction("EditSidebar");
+        }
     }
 
 }
